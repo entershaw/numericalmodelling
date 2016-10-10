@@ -48,6 +48,7 @@ int main() {
 	return 0;
 }
 
+//Equation to be solved
 double f(double theta){
 	return k*L*(tan(theta) - sin(theta)) - m*g;
 }
