@@ -4,20 +4,27 @@
 
 using namespace std;
 
+double g = 9.81;
+double k = 850;
+double L = 0.6;
+double m = 5.5;
+
 double f(double theta);
 
 int main() {
 	
+	//Solution will be between 0 and pi/2
 	double thetaB = 0;
 	double thetaT = 3.1415926535897932384626433832795/2; 
+	
 	double thetaM = (thetaT + thetaB)/2;
 	double out;
 	
-	//headings
+	//Headings. Uncertainty will be the interval size.
 	cout<< left << setw(15) << "Iteration" << setw(15) << "thetaB" << setw(15) << "thetaT" << setw(15) 
 	<< setw(15) << "thetaM" << "Uncertainty" << endl;
 	
-	//initial
+	//Initial
 	cout << left << setw(15) << "0" << setw(15) << thetaB << setw(15) << thetaT 
 	<< setw(15) << thetaM << setw(15) << thetaT - thetaB << endl;
 	
@@ -42,6 +49,6 @@ int main() {
 }
 
 double f(double theta){
-	return 850*0.6*(tan(theta) - sin(theta)) - 5.5*9.81;
+	return k*L*(tan(theta) - sin(theta)) - m*g;
 }
 
