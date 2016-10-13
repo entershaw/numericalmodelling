@@ -12,6 +12,7 @@ double m = 5.5;
 double f(double theta);
 
 int main() {
+
 	
 	//Solution will be between 0 and pi/2
 	double thetaB = 0;
@@ -32,10 +33,10 @@ int main() {
 	for (int iteration = 1; thetaT - thetaB > 1E-3; iteration++){
 	
 		if(f(thetaT) * f(thetaM) < 0){
-			thetaT = thetaM;
+			thetaB = thetaM;
 		}
 		else{
-			thetaB = thetaM;
+			thetaT = thetaM;
 		}
 		
 		thetaM = (thetaT + thetaB)/2;
@@ -44,7 +45,6 @@ int main() {
 		cout<< left << setw(15) << iteration << setw(15) << thetaB << setw(15) << thetaT 
 		<< setw(15) << thetaM << setw(15) << thetaT - thetaB << endl;
 	} 
-	
 	return 0;
 }
 
