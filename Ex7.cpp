@@ -4,11 +4,12 @@
 #include <cfloat>
 #include <cmath>
 #include <fstream>
-#include <string>
 
 using namespace std;
 
 double convergence = 1e-5;
+
+ofstream file;
 
 double f(double x);
 void bisect(double xB, double xT);
@@ -17,12 +18,14 @@ void newtonRhapson(double init);
 int main() {
 	
 	bisect(-100, 100);
-	bisect(0, 100);
-	bisect(-1000,1000);
 
+	file.open("Newton0.csv");
 	newtonRhapson(0);
+	file.open("Newton10.csv");
 	newtonRhapson(10);
+	file.open("Newton-100.csv");
 	newtonRhapson(-100);
+    file.open("Newton1000.csv");
 	newtonRhapson(1000);
 	
 	return 0;
@@ -43,30 +46,21 @@ void bisect(double xB, double xT)
 {	
 	double xM = (xT + xB)/2;
 	double out;
-	
-	//Create file
-	string filename = 
-	ofstream file (filename);
-	
+		
 	//Title
 	cout << "******Bisection Method*******" <<endl;
-	file << "******Bisection Method*******" <<endl;
 	
 	//Headings. Uncertainty will be the interval size.
 	cout << left << setw(15) << "Iteration" << setw(15) << "xB" << setw(15) << "xT" << setw(15) 
-	<< setw(15) << "xM" << "Interval width" << endl;
-	file << left << setw(15) << "Iteration" << setw(15) << "xB" << setw(15) << "xT" << setw(15) 
 	<< setw(15) << "xM" << "Interval width" << endl;
 	
 	//Show initial parameters
 	cout << left << setw(15) << "0" << setw(15) << xB << setw(15) << xT 
 	<< setw(15) << xM << setw(15) << xT - xB << endl;
-	file << left << setw(15) << "0" << setw(15) << xB << setw(15) << xT 
-	<< setw(15) << xM << setw(15) << xT - xB << endl;
-	
-	
+
 	for (int iteration = 1; xT - xB > convergence; iteration++){
-	
+
+		//Bisection method	
 		if(f(xT) * f(xM) < 0){
 			xB = xM;
 		}
@@ -79,29 +73,21 @@ void bisect(double xB, double xT)
 		//print
 		cout<< left << setw(15) << iteration << setw(15) << xB << setw(15) << xT 
 		<< setw(15) << xM << setw(15) << xT - xB << endl << endl;
-		file<< left << setw(15) << iteration << setw(15) << xB << setw(15) << xT 
-		<< setw(15) << xM << setw(15) << xT - xB << endl << endl;
 	}
-	file.close(); 
 }
 
 //Newton-Rhapson method
 void newtonRhapson(double init)
 {
-	//Create file
-	ofstream file ("Newton Rhapson with init=" + init + ".txt");
-	
 	//Title
 	cout << "******Newton-Rhapson Method*******" <<endl;
-	file << "******Newton-Rhapson Method*******" <<endl;
 	
 	//Headings. Uncertainty will be the difference between each iteration.
 	cout<< left << setw(15) << "Iteration" << setw(15) << "x_n" << "x_n - x_{n-1}" << endl;
-	file << left << setw(15) << "Iteration" << setw(15) << "x_n" << "x_n - x_{n-1}" << endl;	
 
 	//Show initial parameters
 	cout << left << setw(15) << "0"<< setw(15) << init << setw(15) << "-" << endl;
-	file << left << setw(15) << "0"<< setw(15) << init << setw(15) << "-" << endl;
+	file << "0,"<< init << endl;
 
 	double uncertainty = DBL_MAX;
 	double x; //x_n
@@ -116,12 +102,11 @@ void newtonRhapson(double init)
 		//print
 		cout << left << setw(15) << iteration << setw(15) << x << setw(15) << uncertainty
 		<< endl;
-		file << left << setw(15) << iteration << setw(15) << x << setw(15) << uncertainty
-		<< endl;
+		file << iteration << "," << x << endl;
 		
 		//prepare for the next iteration
 		xm1 = x;
 	} 
-	file.close();
+	file.close(); 
 	
 }

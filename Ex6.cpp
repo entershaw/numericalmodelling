@@ -12,7 +12,6 @@ double m = 5.5;
 double f(double theta);
 
 int main() {
-
 	
 	//Solution will be between 0 and pi/2
 	double thetaB = 0;
@@ -28,10 +27,10 @@ int main() {
 	//Initial
 	cout << left << setw(15) << "0" << setw(15) << thetaB << setw(15) << thetaT 
 	<< setw(15) << thetaM << setw(15) << thetaT - thetaB << endl;
-	
-	
+		
 	for (int iteration = 1; thetaT - thetaB > 1E-3; iteration++){
-	
+		
+		//Bisection method
 		if(f(thetaT) * f(thetaM) < 0){
 			thetaB = thetaM;
 		}
