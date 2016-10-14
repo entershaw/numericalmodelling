@@ -3,6 +3,8 @@
 #include <iomanip>
 #include <cfloat>
 #include <cmath>
+#include <fstream>
+#include <string>
 
 using namespace std;
 
@@ -13,9 +15,10 @@ void bisect(double xB, double xT);
 void newtonRhapson(double init);
 
 int main() {
+	
 	bisect(-100, 100);
 	bisect(0, 100);
-	bisect(-10000,10000);
+	bisect(-1000,1000);
 
 	newtonRhapson(0);
 	newtonRhapson(10);
@@ -36,19 +39,29 @@ double df(double x){
 }
 
 //Bisection method
-void bisect(double xB, double xT){	
+void bisect(double xB, double xT)
+{	
 	double xM = (xT + xB)/2;
 	double out;
 	
+	//Create file
+	string filename = 
+	ofstream file (filename);
+	
 	//Title
 	cout << "******Bisection Method*******" <<endl;
+	file << "******Bisection Method*******" <<endl;
 	
 	//Headings. Uncertainty will be the interval size.
-	cout<< left << setw(15) << "Iteration" << setw(15) << "xB" << setw(15) << "xT" << setw(15) 
+	cout << left << setw(15) << "Iteration" << setw(15) << "xB" << setw(15) << "xT" << setw(15) 
+	<< setw(15) << "xM" << "Interval width" << endl;
+	file << left << setw(15) << "Iteration" << setw(15) << "xB" << setw(15) << "xT" << setw(15) 
 	<< setw(15) << "xM" << "Interval width" << endl;
 	
 	//Show initial parameters
 	cout << left << setw(15) << "0" << setw(15) << xB << setw(15) << xT 
+	<< setw(15) << xM << setw(15) << xT - xB << endl;
+	file << left << setw(15) << "0" << setw(15) << xB << setw(15) << xT 
 	<< setw(15) << xM << setw(15) << xT - xB << endl;
 	
 	
@@ -66,20 +79,29 @@ void bisect(double xB, double xT){
 		//print
 		cout<< left << setw(15) << iteration << setw(15) << xB << setw(15) << xT 
 		<< setw(15) << xM << setw(15) << xT - xB << endl << endl;
-	} 
+		file<< left << setw(15) << iteration << setw(15) << xB << setw(15) << xT 
+		<< setw(15) << xM << setw(15) << xT - xB << endl << endl;
+	}
+	file.close(); 
 }
 
 //Newton-Rhapson method
-void newtonRhapson(double init){
+void newtonRhapson(double init)
+{
+	//Create file
+	ofstream file ("Newton Rhapson with init=" + init + ".txt");
 	
 	//Title
 	cout << "******Newton-Rhapson Method*******" <<endl;
+	file << "******Newton-Rhapson Method*******" <<endl;
 	
 	//Headings. Uncertainty will be the difference between each iteration.
 	cout<< left << setw(15) << "Iteration" << setw(15) << "x_n" << "x_n - x_{n-1}" << endl;
-	
+	file << left << setw(15) << "Iteration" << setw(15) << "x_n" << "x_n - x_{n-1}" << endl;	
+
 	//Show initial parameters
 	cout << left << setw(15) << "0"<< setw(15) << init << setw(15) << "-" << endl;
+	file << left << setw(15) << "0"<< setw(15) << init << setw(15) << "-" << endl;
 
 	double uncertainty = DBL_MAX;
 	double x; //x_n
@@ -93,11 +115,13 @@ void newtonRhapson(double init){
 
 		//print
 		cout << left << setw(15) << iteration << setw(15) << x << setw(15) << uncertainty
- << endl;
+		<< endl;
+		file << left << setw(15) << iteration << setw(15) << x << setw(15) << uncertainty
+		<< endl;
 		
 		//prepare for the next iteration
 		xm1 = x;
 	} 
-	
+	file.close();
 	
 }
